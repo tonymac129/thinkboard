@@ -30,7 +30,8 @@ function View() {
     }
   }
 
-  async function handleSave() {
+  async function handleSave(e) {
+    e.preventDefault();
     if (!note.title.trim() || !note.content.trim()) {
       toast.error("Please enter a title and content");
       return;
@@ -45,14 +46,27 @@ function View() {
   }
 
   return (
-    <div>
-      <Link to="/">Home</Link>
-      <input value={note.title} onInput={(e) => setNote({ ...note, title: e.target.value })} />
-      <input value={note.content} onInput={(e) => setNote({ ...note, content: e.target.value })} />
-      <p>Created on {new Date(note.createdAt).toLocaleDateString()}</p>
-      <p>Updated on {new Date(note.updatedAt).toLocaleDateString()}</p>
-      <button onClick={handleSave}>Save</button>
-      <button onClick={handleDelete}>Delete</button>
+    <div className="wrapper">
+      <h1 className="welcome">Note details</h1>
+      <Link to="/" className="view-home">&lt; Home</Link>
+      <form onSubmit={(e) => handleSave(e)} className="create-form">
+        <div className="field">
+          <label>Note title</label>
+          <input value={note.title} onInput={(e) => setNote({ ...note, title: e.target.value })} />
+        </div>
+        <div className="field">
+          <label>Note content</label>
+          <input value={note.content} onInput={(e) => setNote({ ...note, content: e.target.value })} />
+        </div>
+        <p className="field">Created on {new Date(note.createdAt).toLocaleDateString()}</p>
+        <p className="field">Updated on {new Date(note.updatedAt).toLocaleDateString()}</p>
+        <div className="create-btns">
+          <button type="submit">Save</button>
+          <button className="cancel-btn" onClick={handleDelete}>
+            Delete
+          </button>
+        </div>
+      </form>
     </div>
   );
 }

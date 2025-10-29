@@ -28,11 +28,25 @@ function Create() {
   }
 
   return (
-    <form onSubmit={(e) => handleSubmit(e)}>
-      <input type="text" value={title} onInput={(e) => setTitle(e.target.value)} />
-      <input type="text" value={content} onInput={(e) => setContent(e.target.value)} />
-      <button type="submit"></button>
-    </form>
+    <div className="wrapper">
+      <h1 className="welcome">Create new note</h1>
+      <form className="create-form" onSubmit={(e) => handleSubmit(e)}>
+        <input placeholder="Note title" type="text" value={title} onInput={(e) => setTitle(e.target.value)} />
+        <input placeholder="Note content" type="text" value={content} onInput={(e) => setContent(e.target.value)} />
+        <div className="create-btns">
+          <button type="submit">Create note</button>
+          <button
+            className="cancel-btn"
+            onClick={(e) => {
+              e.preventDefault();
+              navigate("/");
+            }}
+          >
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
   );
 }
 

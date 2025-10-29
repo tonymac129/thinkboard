@@ -39,30 +39,39 @@ function Home() {
   }
 
   return (
-    <div>
-      <Link to="/create">Create note</Link>
+    <div className="wrapper">
+      <div className="wrapper-top">
+        <h1 className="welcome">Welcome to Thinkboard!</h1>
+        <Link to="/create" className="create-btn">
+          + Create note
+        </Link>
+      </div>
       {isRateLimited && <div>yo u sent too many requests</div>}
       {loading ? (
-        <div>Loading...</div>
+        <div className="message">Loading...</div>
       ) : (
-        <div>
-          {notes.map((note, i) => {
-            return (
-              <div>
-                <Link to={`/note/${note._id}`} key={i}>
-                  {note.title}
-                  <br />
-                  {note.content}
-                  <br />
-                  {new Date(note.createdAt).toLocaleDateString()}
-                  <br />
-                  {new Date(note.updatedAt).toLocaleDateString()}
-                  <br />
-                  <button onClick={(e) => handleDelete(e, note._id)}>Delete</button>
+        <div className="notes">
+          {notes.length > 0 ? (
+            notes.map((note, i) => {
+              return (
+                <Link to={`/note/${note._id}`} className="note" key={i}>
+                  <h2>{note.title}</h2>
+                  <p>{note.content}</p>
+                  <div>
+                    Created {new Date(note.createdAt).toLocaleDateString()}
+                    <br />
+                    Updated {new Date(note.updatedAt).toLocaleDateString()}
+                  </div>
+                  <div className="note-btns">
+                    <button>Edit</button>
+                    <button onClick={(e) => handleDelete(e, note._id)}>Delete</button>
+                  </div>
                 </Link>
-              </div>
-            );
-          })}
+              );
+            })
+          ) : (
+            <div className="message">No notes added!</div>
+          )}
         </div>
       )}
     </div>
