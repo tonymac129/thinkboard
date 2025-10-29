@@ -1,6 +1,6 @@
 import { useParams, Link, useNavigate } from "react-router";
 import { useState, useEffect } from "react";
-import axios from "axios";
+import api from "../lib/axios";
 import toast from "react-hot-toast";
 
 function View() {
@@ -11,7 +11,7 @@ function View() {
   useEffect(() => {
     async function fetchNote() {
       try {
-        const newNote = await axios.get("http://localhost:5001/api/notes/" + id);
+        const newNote = await api.get("/notes/" + id);
         setNote(newNote.data);
       } catch (error) {
         toast.error("Error:" + error);
@@ -22,7 +22,7 @@ function View() {
 
   async function handleDelete() {
     try {
-      await axios.delete("http://localhost:5001/api/notes/" + id);
+      await api.delete("/notes/" + id);
       toast.success("Note deleted successfully");
       navigate("/");
     } catch (error) {
@@ -36,7 +36,7 @@ function View() {
       return;
     }
     try {
-      await axios.put("http://localhost:5001/api/notes/" + id, note);
+      await api.put("/notes/" + id, note);
       toast.success("Note updated successfully");
       navigate("/");
     } catch (error) {

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
-import axios from "axios";
+import api from "../lib/axios";
 import { useNavigate } from "react-router";
 
 function Create() {
@@ -14,7 +14,7 @@ function Create() {
       toast.error("All fields are required!");
     }
     try {
-      await axios.post("http://localhost:5001/api/notes", {
+      await api.post("/notes", {
         title,
         content,
       });
